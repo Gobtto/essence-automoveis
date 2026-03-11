@@ -1,5 +1,13 @@
-let slideState = {};
+document.addEventListener("DOMContentLoaded", function() {
+    const logo = document.getElementById("logo-btn");
+    const navbar = document.getElementById("navbar");
 
+    logo.addEventListener("click", function() {
+        // O comando "toggle" adiciona a classe se ela não existir, e remove se existir
+        navbar.classList.toggle("links-hidden");
+    });
+});
+let slideState = {};
 function initSlides() {
     let containers = document.getElementsByClassName("slideshow-container");
 
@@ -38,3 +46,24 @@ function showSlides(n, no) {
 }
 
 window.onload = initSlides;
+// Aguarda o documento carregar
+document.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll(".navbar a");
+
+    links.forEach(link => {
+        link.addEventListener("click", e => {
+            // Verifica se o link é para uma página interna (não é um link externo ou #)
+            const href = link.getAttribute("href");
+            if (href && href.includes(".html")) {
+                e.preventDefault(); // Impede a troca imediata de página
+
+                document.body.classList.add("fade-out"); // Adiciona o efeito de sumir
+
+                // Espera 500ms (tempo da transição CSS) e muda de página
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 350);
+            }
+        });
+    });
+});
